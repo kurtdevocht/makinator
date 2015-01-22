@@ -17,16 +17,17 @@
 int keyCodes[NUM_INPUTS] = {
   // top side of the makey makey board
  
- /*
   KEY_UP_ARROW,
   KEY_DOWN_ARROW,
   KEY_LEFT_ARROW,
   KEY_RIGHT_ARROW,
-  */
+
+  /*
   MOUSE_MOVE_UP,
   MOUSE_MOVE_DOWN,
   MOUSE_MOVE_LEFT,
   MOUSE_MOVE_RIGHT,
+  */
   ' ',
   MOUSE_LEFT,
   'q',
