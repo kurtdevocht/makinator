@@ -43,12 +43,12 @@ int keyCodes[NUM_INPUTS] = {
 ///////////////////////////
 // NOISE CANCELLATION /////
 ///////////////////////////
-#define SWITCH_THRESHOLD_OFFSET_PERC  2    // number between 1 and 49
+#define SWITCH_THRESHOLD_OFFSET_PERC  5    // number between 1 and 49
                                            // larger value protects better against noise oscillations, but makes it harder to press and release
                                            // recommended values are between 2 and 20
                                            // default value is 5
 
-#define SWITCH_THRESHOLD_CENTER_BIAS 25   // number between 1 and 99
+#define SWITCH_THRESHOLD_CENTER_BIAS 55   // number between 1 and 99
                                           // larger value makes it easier to "release" keys, but harder to "press"
                                           // smaller value makes it easier to "press" keys, but harder to "release"
                                           // recommended values are between 30 and 70
@@ -63,8 +63,7 @@ int keyCodes[NUM_INPUTS] = {
 /////////////////////////
 #define MOUSE_MOTION_UPDATE_INTERVAL  35   // how many loops to wait between 
                                            // sending mouse motion updates
-                                           
-#define PIXELS_PER_MOUSE_STEP         4     // a larger number will make the mouse
+   #define PIXELS_PER_MOUSE_STEP         4     // a larger number will make the mouse
                                            // move faster
 
 #define MOUSE_RAMP_SCALE              150  // Scaling factor for mouse movement ramping
