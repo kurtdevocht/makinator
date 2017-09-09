@@ -15,19 +15,10 @@
 */
 
 int keyCodes[NUM_INPUTS] = {
-  // top side of the makey makey board
- 
   KEY_UP_ARROW,
   KEY_DOWN_ARROW,
   KEY_LEFT_ARROW,
   KEY_RIGHT_ARROW,
-
-  /*
-  MOUSE_MOVE_UP,
-  MOUSE_MOVE_DOWN,
-  MOUSE_MOVE_LEFT,
-  MOUSE_MOVE_RIGHT,
-  */
   ' ',
   MOUSE_LEFT,
   'q',
@@ -63,7 +54,8 @@ int keyCodes[NUM_INPUTS] = {
 /////////////////////////
 #define MOUSE_MOTION_UPDATE_INTERVAL  35   // how many loops to wait between 
                                            // sending mouse motion updates
-   #define PIXELS_PER_MOUSE_STEP         4     // a larger number will make the mouse
+                                           
+#define PIXELS_PER_MOUSE_STEP         4     // a larger number will make the mouse
                                            // move faster
 
 #define MOUSE_RAMP_SCALE              150  // Scaling factor for mouse movement ramping
@@ -83,37 +75,37 @@ int keyCodes[NUM_INPUTS] = {
 - to get modifier keys, function keys, etc 
 
 KEY_LEFT_CTRL
-KEY_LEFT_SHIFT		
-KEY_LEFT_ALT		
-KEY_LEFT_GUI		
-KEY_RIGHT_CTRL		
-KEY_RIGHT_SHIFT		
-KEY_RIGHT_ALT	
-KEY_RIGHT_GUI		
+KEY_LEFT_SHIFT    
+KEY_LEFT_ALT    
+KEY_LEFT_GUI    
+KEY_RIGHT_CTRL    
+KEY_RIGHT_SHIFT   
+KEY_RIGHT_ALT 
+KEY_RIGHT_GUI   
 
-KEY_BACKSPACE		
-KEY_TAB				
-KEY_RETURN			
-KEY_ESC				
-KEY_INSERT			
-KEY_DELETE			
-KEY_PAGE_UP			
-KEY_PAGE_DOWN		
+KEY_BACKSPACE   
+KEY_TAB       
+KEY_RETURN      
+KEY_ESC       
+KEY_INSERT      
+KEY_DELETE      
+KEY_PAGE_UP     
+KEY_PAGE_DOWN   
 KEY_HOME
-KEY_END				
-KEY_CAPS_LOCK	
-	
-KEY_F1				
-KEY_F2				
-KEY_F3				
-KEY_F4				
-KEY_F5				
-KEY_F6				
-KEY_F7				
-KEY_F8				
-KEY_F9				
+KEY_END       
+KEY_CAPS_LOCK 
+  
+KEY_F1        
+KEY_F2        
+KEY_F3        
+KEY_F4        
+KEY_F5        
+KEY_F6        
+KEY_F7        
+KEY_F8        
+KEY_F9        
 KEY_F10
-KEY_F11				
-KEY_F12			
+KEY_F11       
+KEY_F12     
 
 */

@@ -1,6 +1,4 @@
 /*
- * Original source: https://github.com/sparkfun/makeymakey
- *
  ************************************************
  ************** MAKEY MAKEY *********************
  ************************************************
@@ -36,7 +34,7 @@
 ////////////////////////
 
 #define BUFFER_LENGTH    3     // 3 bytes gives us 24 samples
-#define NUM_INPUTS       14    // 6 on the front + 12 on the back
+#define NUM_INPUTS       18    // 6 on the front + 12 on the back
 //#define TARGET_LOOP_TIME 694   // (1/60 seconds) / 24 samples = 694 microseconds per sample 
 //#define TARGET_LOOP_TIME 758  // (1/55 seconds) / 24 samples = 758 microseconds per sample 
 #define TARGET_LOOP_TIME 744  // (1/56 seconds) / 24 samples = 744 microseconds per sample 
@@ -47,6 +45,10 @@
 #define MOUSE_MOVE_LEFT     -3
 #define MOUSE_MOVE_RIGHT    -4
 
+#if (ARDUINO > 10605)
+  #include <Keyboard.h>
+  #include <Mouse.h>
+#endif
 #include "settings.h"
 
 /////////////////////////
@@ -85,15 +87,11 @@ int mouseHoldCount[NUM_INPUTS]; // used to store mouse movement hold data
 // Pin Numbers
 // input pin numbers for kickstarter production board
 int pinNumbers[NUM_INPUTS] = {
-  7,4,5,6,2,3,0,1,A0,A1,A2,A3,A4,A5
+    7,4,5,6,2,3,0,1,A0,A1,A2,A3,A4,A5
 };
 
 // input status LED pin numbers
-const int inputLED_a = 13;
-const int inputLED_b = 1;
-const int inputLED_c = 3;
 const int outputK = 8;
-const int outputM = 8;
 byte ledCycleCounter = 0;
 
 // timing
@@ -114,8 +112,6 @@ void updateInputStates();
 void sendMouseButtonEvents();
 void sendMouseMovementEvents();
 void addDelay();
-void cycleLEDs();
-void danceLeds();
 void updateOutLEDs();
 
 //////////////////////
@@ -125,7 +121,6 @@ void setup()
 {
   initializeArduino();
   initializeInputs();
-  danceLeds();
 }
 
 ////////////////////
@@ -139,7 +134,6 @@ void loop()
   updateInputStates();
   sendMouseButtonEvents();
   sendMouseMovementEvents();
-  cycleLEDs();
   updateOutLEDs();
   addDelay();
 }
@@ -159,18 +153,8 @@ void initializeArduino() {
     pinMode(pinNumbers[i], INPUT);
     digitalWrite(pinNumbers[i], LOW);
   }
-
-  pinMode(inputLED_a, INPUT);
-  pinMode(inputLED_b, INPUT);
-  pinMode(inputLED_c, INPUT);
-  digitalWrite(inputLED_a, LOW);
-  digitalWrite(inputLED_b, LOW);
-  digitalWrite(inputLED_c, LOW);
-
   pinMode(outputK, OUTPUT);
-  pinMode(outputM, OUTPUT);
   digitalWrite(outputK, LOW);
-  digitalWrite(outputM, LOW);
 
 
 #ifdef DEBUG
@@ -515,143 +499,7 @@ void addDelay() {
 
 }
 
-///////////////////////////
-// CYCLE LEDS
-///////////////////////////
-void cycleLEDs() {
-  pinMode(inputLED_a, INPUT);
-  pinMode(inputLED_b, INPUT);
-  pinMode(inputLED_c, INPUT);
-  digitalWrite(inputLED_a, LOW);
-  digitalWrite(inputLED_b, LOW);
-  digitalWrite(inputLED_c, LOW);
 
-  ledCycleCounter++;
-  ledCycleCounter %= 6;
-
-  if ((ledCycleCounter == 0) && inputs[0].pressed) {
-    pinMode(inputLED_a, INPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, HIGH);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, LOW);
-  }
-  if ((ledCycleCounter == 1) && inputs[1].pressed) {
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, HIGH);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, INPUT);
-    digitalWrite(inputLED_c, LOW);
-
-  }
-  if ((ledCycleCounter == 2) && inputs[2].pressed) {
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, HIGH);
-    pinMode(inputLED_c, INPUT);
-    digitalWrite(inputLED_c, LOW);
-  }
-  if ((ledCycleCounter == 3) && inputs[3].pressed) {
-    pinMode(inputLED_a, INPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, HIGH);
-  }
-  if ((ledCycleCounter == 4) && inputs[4].pressed) {
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, INPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, HIGH);
-  }
-  if ((ledCycleCounter == 5) && inputs[5].pressed) {
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, HIGH);
-    pinMode(inputLED_b, INPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, LOW);
-  }
-
-}
-
-///////////////////////////
-// DANCE LEDS
-///////////////////////////
-void danceLeds()
-{
-  int delayTime = 50;
-  int delayTime2 = 100;
-
-  // CIRCLE
-  for(int i=0; i<4; i++)
-  {
-    // UP
-    pinMode(inputLED_a, INPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, HIGH);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, LOW);
-    delay(delayTime);
-
-    //RIGHT
-    pinMode(inputLED_a, INPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, HIGH);
-    delay(delayTime);
-
-
-    // DOWN
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, HIGH);
-    pinMode(inputLED_b, OUTPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, INPUT);
-    digitalWrite(inputLED_c, LOW);
-    delay(delayTime);
-
-    // LEFT
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, OUTPUT);    
-    digitalWrite(inputLED_b, HIGH);
-    pinMode(inputLED_c, INPUT);
-    digitalWrite(inputLED_c, LOW);
-    delay(delayTime);    
-  }    
-
-  // WIGGLE
-  for(int i=0; i<4; i++)
-  {
-    // SPACE
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, HIGH);
-    pinMode(inputLED_b, INPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, LOW);
-    delay(delayTime2);    
-
-    // CLICK
-    pinMode(inputLED_a, OUTPUT);
-    digitalWrite(inputLED_a, LOW);
-    pinMode(inputLED_b, INPUT);
-    digitalWrite(inputLED_b, LOW);
-    pinMode(inputLED_c, OUTPUT);
-    digitalWrite(inputLED_c, HIGH);
-    delay(delayTime2);    
-  }
-}
 
 void updateOutLEDs()
 {
@@ -678,7 +526,7 @@ void updateOutLEDs()
     }
   }
 
-  if (keyPressed)
+  if (keyPressed || mousePressed)
   {
     digitalWrite(outputK, HIGH);
     TXLED1;
@@ -687,17 +535,6 @@ void updateOutLEDs()
   {
     digitalWrite(outputK, LOW);
     TXLED0;
-  }
-
-  if (mousePressed)
-  {
-    digitalWrite(outputM, HIGH);
-    RXLED1;
-  }
-  else
-  {
-    digitalWrite(outputM, LOW);
-    RXLED0;
   }
 }
 
