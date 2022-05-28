@@ -21,14 +21,14 @@ int keyCodes[NUM_INPUTS] = {
   KEY_RIGHT_ARROW,
   ' ',
   MOUSE_LEFT,
-  'q',
-  'w',
-  'e',
-  'r',
-  't',
-  'y',
-  'u',
-  'i'
+  225, // Key '1' on numpad (Num Lock must be enabled)
+  226, //      2
+  227, //      3
+  228, //      4
+  229, //      5
+  230, //      6
+  231, //      7
+  232  //      8
 };
 
 ///////////////////////////
